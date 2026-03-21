@@ -67,7 +67,7 @@ export function Hero({ onBookClick }: { onBookClick: () => void }) {
               Henderson ENT & Sinus Centre
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-headline font-extrabold text-primary leading-[1.1] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-headline font-extrabold text-primary leading-[1.1] tracking-tight mb-6">
               Expert Care by <br />
               <span className="text-on-secondary-container bg-secondary-container/30 px-2 rounded-lg">Dr. Joe Henderson</span>
             </h1>

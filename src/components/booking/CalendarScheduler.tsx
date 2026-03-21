@@ -38,7 +38,7 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full min-w-0">
       {/* Header and Month/Year Selection */}
       <div>
         <div className="flex items-center justify-between mb-6">
@@ -69,32 +69,32 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
         </div>
 
         {/* Month/Year Selection (Smooth Scroll, Highly Animated) */}
-        <div className="overflow-x-auto pb-6 mb-2 scrollbar-none custom-scrollbar flex gap-3">
+        <div className="overflow-x-auto pb-6 mb-2 scrollbar-none flex gap-2 sm:gap-3 snap-x w-full">
           {Array.from({ length: 12 }).map((_, i) => {
-            const mDate = addMonths(startOfMonth(today), i);
+            const mDate = addMonths(startOfToday(), i);
             const isSelected = isSameDay(mDate, currentMonth);
             return (
               <button
                 key={mDate.toISOString()}
                 onClick={() => setCurrentMonth(mDate)}
                 className={cn(
-                  "flex-shrink-0 px-6 py-3 rounded-2xl border font-headline font-semibold transition-all duration-300",
+                  "flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl border font-headline font-semibold text-sm sm:text-base transition-all duration-300 snap-center",
                   isSelected
                     ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105"
                     : "bg-surface-container-lowest border-outline-variant/10 text-on-surface-variant hover:border-primary/30 hover:bg-surface-container-low"
                 )}
               >
-                {format(mDate, "MMMM yyyy")}
+                {format(mDate, "MMM yyyy")}
               </button>
             );
           })}
         </div>
         
-        <div className="grid grid-cols-7 gap-3 mt-4">
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 lg:gap-3 mt-4">
           {/* Day of week headers */}
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div key={day} className="text-center text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50 mb-2">
-              {day}
+            <div key={day} className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-tight sm:tracking-widest text-on-surface-variant/50 mb-1 sm:mb-2">
+              {day.slice(0, 1)}<span className="hidden sm:inline">{day.slice(1)}</span>
             </div>
           ))}
           
@@ -112,19 +112,19 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
                 onClick={() => !isDisabled && handleDateSelect(day)}
                 disabled={isDisabled}
                 className={cn(
-                  "flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl border transition-all duration-300",
+                  "aspect-square flex flex-col items-center justify-center p-0 rounded-xl sm:rounded-2xl border transition-all duration-300 relative",
                   isSelected
                     ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105 z-10"
-                    : "bg-surface-container-lowest border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container-low",
-                  isDisabled && "opacity-30 cursor-not-allowed grayscale bg-transparent border-transparent",
+                    : "bg-surface-container-lowest border-outline-variant/10 hover:bg-surface-container-low",
+                  isDisabled && "opacity-30 cursor-not-allowed grayscale",
                   !isSelected && isToday && "border-primary/50 text-primary"
                 )}
               >
-                <span className="text-lg font-headline font-extrabold">
+                <span className="text-sm sm:text-base lg:text-lg font-headline font-extrabold">
                   {format(day, "d")}
                 </span>
                 {isToday && !isSelected && (
-                  <div className="w-1 h-1 rounded-full bg-primary mt-1 absolute bottom-2" />
+                  <div className="w-1 h-1 rounded-full bg-primary absolute bottom-2" />
                 )}
               </button>
             );
@@ -132,14 +132,13 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
         </div>
       </div>
 
-      {/* Time Selection */}
       <div className={cn("transition-all duration-500", !selectedDate && "opacity-30 pointer-events-none")}>
-        <h4 className="text-lg font-headline font-bold text-primary flex items-center gap-2 mb-6">
+        <h4 className="text-lg font-headline font-bold text-primary flex items-center gap-2 mb-8">
           <Clock className="size-5 text-on-secondary-container" />
           Available Times
         </h4>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
           {timeSlots.map((time) => {
             const isSelected = selectedTime === time;
             return (
@@ -147,7 +146,7 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
                 key={time}
                 onClick={() => handleTimeSelect(time)}
                 className={cn(
-                  "py-3 px-4 rounded-xl border font-body text-sm font-semibold transition-all duration-300",
+                  "py-2.5 sm:py-4 px-2 sm:px-6 rounded-xl sm:rounded-2xl border font-body text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center",
                   isSelected
                     ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105 z-10"
                     : "bg-surface-container-lowest border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container-low text-on-surface-variant"

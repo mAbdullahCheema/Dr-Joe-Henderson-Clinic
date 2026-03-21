@@ -80,52 +80,52 @@ export function BookingForm({ onClose }: BookingFormProps) {
   };
 
   return (
-    <div className="bg-surface-container-lowest rounded-[2.5rem] shadow-2xl border border-outline-variant/10 overflow-hidden max-w-4xl mx-auto">
-      <div className="grid lg:grid-cols-5 min-h-[600px]">
+    <div className="bg-surface-container-lowest rounded-2xl sm:rounded-[2.5rem] shadow-2xl border border-outline-variant/10 overflow-hidden max-w-4xl mx-auto w-full">
+      <div className="grid lg:grid-cols-5 lg:min-h-[600px] w-full min-w-0">
         {/* Sidebar Info */}
-        <div className="lg:col-span-2 bg-primary p-10 text-white flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-primary p-6 sm:p-8 lg:p-10 text-white flex flex-col justify-between">
           <div>
             <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-8">
               <Calendar className="size-6 text-primary" />
             </div>
-            <h3 className="text-3xl font-headline font-extrabold mb-6 leading-tight">
+            <h3 className="text-2xl sm:text-3xl font-headline font-extrabold mb-4 sm:mb-6 leading-tight">
               Book Your <br />
               Consultation.
             </h3>
-            <p className="text-white/70 font-body leading-relaxed mb-8">
+            <p className="text-sm sm:text-base text-white/70 font-body leading-relaxed mb-6 sm:mb-8">
               Select a convenient time for your initial assessment with Dr. Joe Henderson.
             </p>
             
             <div className="space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <CheckCircle2 className="size-5 text-secondary-container" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="size-4 sm:size-5 text-secondary-container" />
                 </div>
                 <p className="text-sm font-medium">Expert ENT Assessment</p>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <CheckCircle2 className="size-5 text-secondary-container" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="size-4 sm:size-5 text-secondary-container" />
                 </div>
                 <p className="text-sm font-medium">Personalized Care Plan</p>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <CheckCircle2 className="size-5 text-secondary-container" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="size-4 sm:size-5 text-secondary-container" />
                 </div>
                 <p className="text-sm font-medium">Medicare Rebates Apply</p>
               </div>
             </div>
           </div>
           
-          <div className="pt-10 border-t border-white/10">
+          <div className="pt-6 sm:pt-10 border-t border-white/10 mt-8 lg:mt-0">
             <p className="text-xs text-white/50 font-body uppercase tracking-widest mb-2">Need help?</p>
             <p className="text-lg font-headline font-bold">(02) 9000 0000</p>
           </div>
         </div>
 
         {/* Main Form Area */}
-        <div className="lg:col-span-3 p-10 relative">
+        <div className="lg:col-span-3 p-4 sm:p-6 lg:p-10 relative min-w-0 w-full">
           <AnimatePresence mode="wait">
             {!isSuccess ? (
               <motion.div
@@ -133,28 +133,28 @@ export function BookingForm({ onClose }: BookingFormProps) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="h-full flex flex-col"
+                className="h-full flex flex-col w-full min-w-0"
               >
                 {/* Progress Bar */}
-                <div className="flex items-center gap-4 mb-10">
-                  <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", step >= 1 ? "bg-primary" : "bg-surface-container-high")} />
-                  <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", step >= 2 ? "bg-primary" : "bg-surface-container-high")} />
+                <div className="flex items-center gap-4 mb-6 sm:mb-10">
+                  <div className={cn("h-1 flex-1 rounded-full transition-all duration-500", step >= 1 ? "bg-primary" : "bg-surface-container-high")} />
+                  <div className={cn("h-1 flex-1 rounded-full transition-all duration-500", step >= 2 ? "bg-primary" : "bg-surface-container-high")} />
                 </div>
 
                 {step === 1 ? (
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0 w-full relative">
                     <CalendarScheduler
                       onSelect={handleDateTimeSelect}
                       selectedDate={selectedDate}
                       selectedTime={selectedTime}
                       canProceed={!!(selectedDate && selectedTime)}
                     />
-                    <div className="mt-10 flex justify-end">
+                    <div className="mt-6 sm:mt-10 flex justify-end w-full">
                       <Button
                         size="lg"
                         disabled={!selectedDate || !selectedTime}
                         onClick={() => setStep(2)}
-                        className="shadow-xl shadow-primary/20"
+                        className="shadow-xl shadow-primary/20 w-full sm:w-auto"
                       >
                         Next: Patient Details
                         <ArrowRight className="size-5 ml-2" />
@@ -164,9 +164,9 @@ export function BookingForm({ onClose }: BookingFormProps) {
                 ) : (
                   <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
                     <div className="space-y-6 flex-1">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-xs font-bold text-primary uppercase tracking-widest">First Name</label>
+                          <label className="text-xs font-bold text-primary uppercase tracking-widest text-shadow-sm">First Name</label>
                           <div className="relative">
                             <User className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-on-surface-variant" />
                             <input
@@ -175,25 +175,25 @@ export function BookingForm({ onClose }: BookingFormProps) {
                               value={formData.firstName}
                               onChange={handleInputChange}
                               placeholder="John"
-                              className="w-full h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                              className="w-full h-11 sm:h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                             />
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-xs font-bold text-primary uppercase tracking-widest">Last Name</label>
+                          <label className="text-xs font-bold text-primary uppercase tracking-widest text-shadow-sm">Last Name</label>
                           <input
                             required
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
                             placeholder="Doe"
-                            className="w-full h-12 bg-surface border border-outline-variant/20 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                            className="w-full h-11 sm:h-12 bg-surface border border-outline-variant/20 rounded-xl px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-primary uppercase tracking-widest">Email Address</label>
+                        <label className="text-xs font-bold text-primary uppercase tracking-widest text-shadow-sm">Email Address</label>
                         <div className="relative">
                           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-on-surface-variant" />
                           <input
@@ -203,13 +203,13 @@ export function BookingForm({ onClose }: BookingFormProps) {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="john@example.com"
-                            className="w-full h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                            className="w-full h-11 sm:h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-primary uppercase tracking-widest">Phone Number</label>
+                        <label className="text-xs font-bold text-primary uppercase tracking-widest text-shadow-sm">Phone Number</label>
                         <div className="relative">
                           <Phone className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-on-surface-variant" />
                           <input
@@ -219,14 +219,14 @@ export function BookingForm({ onClose }: BookingFormProps) {
                             value={formData.phone}
                             onChange={handleInputChange}
                             placeholder="0400 000 000"
-                            className="w-full h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                            className="w-full h-11 sm:h-12 bg-surface border border-outline-variant/20 rounded-xl pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <label className="text-xs font-bold text-primary uppercase tracking-widest block">Is this your first visit?</label>
-                        <div className="flex gap-6">
+                        <label className="text-xs font-bold text-primary uppercase tracking-widest block text-shadow-sm">Is this your first visit?</label>
+                        <div className="flex flex-wrap gap-4 sm:gap-6">
                           <label className="flex items-center gap-2 cursor-pointer group">
                             <div className="relative flex items-center">
                               <input
@@ -261,8 +261,8 @@ export function BookingForm({ onClose }: BookingFormProps) {
                       </div>
 
                       <div className="space-y-3">
-                        <label className="text-xs font-bold text-primary uppercase tracking-widest block">Preferred Consultation Method</label>
-                        <div className="flex gap-6">
+                        <label className="text-xs font-bold text-primary uppercase tracking-widest block text-shadow-sm">Preferred Consultation Method</label>
+                        <div className="flex flex-wrap gap-4 sm:gap-6">
                           <label className="flex items-center gap-2 cursor-pointer group">
                             <div className="relative flex items-center">
                               <input
@@ -297,8 +297,8 @@ export function BookingForm({ onClose }: BookingFormProps) {
                       </div>
 
                       <div className="space-y-3">
-                        <label className="text-xs font-bold text-primary uppercase tracking-widest block">Do you have insurance?</label>
-                        <div className="flex gap-6">
+                        <label className="text-xs font-bold text-primary uppercase tracking-widest block text-shadow-sm">Do you have insurance?</label>
+                        <div className="flex flex-wrap gap-4 sm:gap-6">
                           <label className="flex items-center gap-2 cursor-pointer group">
                             <div className="relative flex items-center">
                               <input
@@ -352,7 +352,7 @@ export function BookingForm({ onClose }: BookingFormProps) {
                       </div>
                     </div>
 
-                    <div className="mt-10 flex items-center justify-between">
+                    <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center gap-4 sm:justify-between">
                       <button
                         type="button"
                         onClick={() => setStep(1)}
@@ -363,13 +363,13 @@ export function BookingForm({ onClose }: BookingFormProps) {
                       <Button
                         size="lg"
                         disabled={!isFormValid || isSubmitting}
-                        className="shadow-xl shadow-primary/20 min-w-[200px]"
+                        className="shadow-xl shadow-primary/20 w-full sm:w-auto sm:min-w-[200px]"
                       >
                         {isSubmitting ? (
                           <Loader2 className="size-5 animate-spin" />
                         ) : (
                           <>
-                            Confirm
+                            Confirm Booking
                             <ArrowRight className="size-5 ml-2" />
                           </>
                         )}

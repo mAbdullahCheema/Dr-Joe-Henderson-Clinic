@@ -80,7 +80,7 @@ export function Navbar({
               <span className="text-white font-headline font-bold text-xl">H</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-primary font-headline font-bold text-lg leading-tight tracking-tight">
+              <span className="text-primary font-headline font-bold text-base sm:text-lg leading-tight tracking-tight">
                 Henderson ENT & Sinus Centre
               </span>
               <span className="text-on-secondary-container font-body text-xs font-medium uppercase tracking-widest">

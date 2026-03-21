@@ -63,22 +63,22 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+              className="pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
             >
-              <div className="flex justify-between items-center mb-12">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6 mb-8 sm:mb-10 lg:mb-12">
                 <div>
-                  <h1 className="text-4xl font-headline font-extrabold text-primary mb-2">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-headline font-extrabold text-primary mb-2">
                     Online Booking
                   </h1>
-                  <p className="text-on-surface-variant font-body">
+                  <p className="text-sm sm:text-base text-on-surface-variant font-body">
                     Secure your appointment in less than 2 minutes.
                   </p>
                 </div>
                 <button
                   onClick={toggleBooking}
-                  className="p-3 rounded-full bg-surface-container-low hover:bg-surface-container-high transition-colors group"
+                  className="p-3 w-fit rounded-full bg-surface-container-low hover:bg-surface-container-high transition-colors group"
                 >
-                  <X className="size-6 text-on-surface-variant group-hover:text-primary" />
+                  <X className="size-5 sm:size-6 text-on-surface-variant group-hover:text-primary" />
                 </button>
               </div>
               
