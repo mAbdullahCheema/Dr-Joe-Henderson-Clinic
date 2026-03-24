@@ -17,10 +17,13 @@ const timeSlots = [
 
 export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canProceed }: CalendarSchedulerProps) {
   const today = startOfToday();
-  const [currentMonth, setCurrentMonth] = React.useState(startOfMonth(today));
+  const [currentMonth, setCurrentMonth] = React.useState<Date | null>(null);
+  
+  // What we show in the grid
+  const displayedMonth = currentMonth || startOfMonth(today);
   
   // Generate days for the current selected month
-  const monthStart = startOfMonth(currentMonth);
+  const monthStart = startOfMonth(displayedMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
@@ -28,6 +31,7 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
   const availableDays = eachDayOfInterval({ start: startDate, end: endDate });
 
   const handleDateSelect = (date: Date) => {
+    if (!currentMonth) return;
     onSelect(date, selectedTime || "");
   };
 
@@ -49,18 +53,18 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
           <div className="flex gap-2">
             <button 
               onClick={() => {
-                const prevMonth = addMonths(currentMonth, -1);
+                const prevMonth = addMonths(displayedMonth, -1);
                 if (!isBefore(prevMonth, startOfMonth(today))) {
                   setCurrentMonth(prevMonth);
                 }
               }}
-              disabled={isBefore(addMonths(currentMonth, -1), startOfMonth(today))}
+              disabled={isBefore(addMonths(displayedMonth, -1), startOfToday())}
               className="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant transition-colors disabled:opacity-30 disabled:pointer-events-none"
             >
               <ChevronLeft className="size-5" />
             </button>
             <button 
-              onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+              onClick={() => setCurrentMonth(addMonths(displayedMonth, 1))}
               className="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant transition-colors"
             >
               <ChevronRight className="size-5" />
@@ -72,7 +76,7 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
         <div className="overflow-x-auto pb-6 mb-2 scrollbar-none flex gap-2 sm:gap-3 snap-x w-full">
           {Array.from({ length: 12 }).map((_, i) => {
             const mDate = addMonths(startOfToday(), i);
-            const isSelected = isSameDay(mDate, currentMonth);
+            const isSelected = !!currentMonth && isSameDay(mDate, currentMonth);
             return (
               <button
                 key={mDate.toISOString()}
@@ -90,10 +94,17 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
           })}
         </div>
         
-        <div className="grid grid-cols-7 gap-1 sm:gap-2 lg:gap-3 mt-4">
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 lg:gap-3 mt-4 relative">
+          {!currentMonth && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-surface-container-lowest/40 backdrop-blur-[2px] rounded-3xl">
+              <div className="bg-white px-6 py-3 rounded-2xl shadow-xl border border-primary/10">
+                <p className="text-primary font-headline font-bold text-sm">Select a month to continue</p>
+              </div>
+            </div>
+          )}
           {/* Day of week headers */}
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div key={day} className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-tight sm:tracking-widest text-on-surface-variant/50 mb-1 sm:mb-2">
+            <div key={day} className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-tight sm:tracking-widest text-on-surface-variant/50 mb-1 sm:mb-2 text-shadow-sm">
               {day.slice(0, 1)}<span className="hidden sm:inline">{day.slice(1)}</span>
             </div>
           ))}
@@ -103,8 +114,8 @@ export function CalendarScheduler({ onSelect, selectedDate, selectedTime, canPro
             const isToday = isSameDay(day, today);
             const isWeekend = day.getDay() === 0 || day.getDay() === 6;
             const isPast = isBefore(day, today);
-            const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
-            const isDisabled = isWeekend || isPast || !isCurrentMonth;
+            const isCurrentMonth = day.getMonth() === displayedMonth.getMonth();
+            const isDisabled = isWeekend || isPast || !isCurrentMonth || !currentMonth;
 
             return (
               <button
