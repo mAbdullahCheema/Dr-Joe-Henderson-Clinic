@@ -2,8 +2,6 @@ This is an app for doctor's clinic with appointment Booking Features and general
 
 This contains everything you need to run your app locally.
 
-View your app in AI Studio: https://ai.studio/apps/255a0657-dd2b-4ca5-b2cc-f30bf1c5caf7
-
 ## Run Locally
 
 **Prerequisites:**  Node.js
