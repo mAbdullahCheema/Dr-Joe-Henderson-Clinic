@@ -68,9 +68,20 @@ export function BookingForm({ onClose }: BookingFormProps) {
     };
 
     try {
-      // Simulate API call
+      // Post to n8n webhook
       console.log("Submitting to n8n webhook:", payload);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await fetch("https://abdullahtestingdo22.app.n8n.cloud/webhook/04a17dd9-75c3-4e78-a58a-a110be55c51e", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit booking");
+      }
+
       setIsSuccess(true);
     } catch (error) {
       console.error("Booking error:", error);

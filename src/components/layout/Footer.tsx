@@ -7,6 +7,42 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = React.useState<"privacy" | "terms" | null>(null);
 
+  const [email, setEmail] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isJoined, setIsJoined] = React.useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        type: "newsletter_signup",
+        email: email,
+        submittedAt: new Date().toISOString(),
+        clinic: "Dr. Joe Henderson ENT Specialist",
+      };
+
+      const response = await fetch("https://abdullahtestingdo22.app.n8n.cloud/webhook/04a17dd9-75c3-4e78-a58a-a110be55c51e", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setIsJoined(true);
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Newsletter submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-primary text-white pt-20 pb-10 overflow-hidden relative">
       {/* Background Accents */}
@@ -90,19 +126,31 @@ export function Footer() {
           {/* Newsletter */}
           <div>
             <h4 className="text-lg font-headline font-bold mb-6">Patient Newsletter</h4>
-            <p className="text-white/70 font-body text-sm mb-6 leading-relaxed">
-              Stay informed about clinic updates and ENT health tips.
-            </p>
-            <form className="relative">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="w-full h-12 bg-white/10 border border-white/20 rounded-xl px-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-              />
-              <button className="absolute right-1.5 top-1.5 h-9 px-4 bg-white text-primary rounded-lg font-bold text-xs hover:bg-secondary-container transition-colors">
-                Join
-              </button>
-            </form>
+            {isJoined ? (
+              <p className="text-emerald-400 font-bold text-sm">Welcome aboard! Check your inbox soon.</p>
+            ) : (
+              <>
+                <p className="text-white/70 font-body text-sm mb-6 leading-relaxed">
+                  Stay informed about clinic updates and ENT health tips.
+                </p>
+                <form className="relative" onSubmit={handleNewsletterSubmit}>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                    className="w-full h-12 bg-white/10 border border-white/20 rounded-xl px-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                  />
+                  <button 
+                    disabled={isSubmitting}
+                    className="absolute right-1.5 top-1.5 h-9 px-4 bg-white text-primary rounded-lg font-bold text-xs hover:bg-secondary-container transition-colors disabled:opacity-50"
+                  >
+                    {isSubmitting ? "..." : "Join"}
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
 
