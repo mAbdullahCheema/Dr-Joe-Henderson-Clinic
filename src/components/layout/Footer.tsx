@@ -2,6 +2,7 @@ import * as React from "react";
 import { motion } from "motion/react";
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { LegalModal } from "../ui/LegalModal";
+import { requireWebhookUrl } from "../../lib/config";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -24,7 +25,7 @@ export function Footer() {
         clinic: "Dr. Joe Henderson ENT Specialist",
       };
 
-      const response = await fetch("https://abdullahtestingdo22.app.n8n.cloud/webhook/04a17dd9-75c3-4e78-a58a-a110be55c51e", {
+      const response = await fetch(requireWebhookUrl(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

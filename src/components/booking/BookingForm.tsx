@@ -4,6 +4,7 @@ import { Calendar, User, Phone, Mail, ShieldCheck, CheckCircle2, ArrowRight, Loa
 import { Button } from "../ui/Button";
 import { CalendarScheduler } from "./CalendarScheduler";
 import { cn } from "../../lib/utils";
+import { requireWebhookUrl } from "../../lib/config";
 import { format } from "date-fns";
 
 interface BookingFormProps {
@@ -68,9 +69,8 @@ export function BookingForm({ onClose }: BookingFormProps) {
     };
 
     try {
-      // Post to n8n webhook
-      console.log("Submitting to n8n webhook:", payload);
-      const response = await fetch("https://abdullahtestingdo22.app.n8n.cloud/webhook/04a17dd9-75c3-4e78-a58a-a110be55c51e", {
+      // Endpoint comes from env so it can be rotated without a code change.
+      const response = await fetch(requireWebhookUrl(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
